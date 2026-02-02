@@ -52,6 +52,14 @@ export type GenericEndpointInfo = {
    * or undefined for other services such as WFS
    */
   exceptionFormats?: MimeType[] | string[];
+
+  /**
+   The optional <MaxWidth> and <MaxHeight> elements in the service metadata are positive integers indicating the
+   maximum width and height values that a client is permitted to include in a single GetMap request. If either element
+   is absent the server imposes no limit on the corresponding parameter.
+  */
+  maxWidth?: number;
+  maxHeight?: number;
 };
 
 export type MimeType = string;

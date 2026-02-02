@@ -1,0 +1,240 @@
+<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMS_Capabilities version="1.3.0"  xmlns="http://www.opengis.net/wms"   xmlns:sld="http://www.opengis.net/sld"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"   xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd  http://www.opengis.net/sld http://schemas.opengis.net/sld/1.1.0/sld_capabilities.xsd  http://mapserver.gis.umn.edu/mapserver https://mrdata.usgs.gov/services/gscworld?service=WMS&amp;version=1.3.0&amp;request=GetSchemaExtension">
+
+    <!-- MapServer version 7.6.7 OUTPUT=PNG OUTPUT=JPEG SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO SUPPORTS=ICONV SUPPORTS=FRIBIDI SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=FASTCGI SUPPORTS=GEOS SUPPORTS=POINT_Z_M SUPPORTS=PBF INPUT=JPEG INPUT=POSTGIS INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE -->
+
+    <Service>
+        <Name>WMS</Name>
+        <Title>GSC_WorldGeology</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/"/>
+        <ContactInformation>
+            <ContactPersonPrimary>
+                <ContactPerson>Peter N. Schweitzer</ContactPerson>
+                <ContactOrganization>U.S. Geological Survey Mineral Resources Program</ContactOrganization>
+            </ContactPersonPrimary>
+            <ContactPosition>Geologist</ContactPosition>
+            <ContactAddress>
+                <AddressType>mailing address</AddressType>
+                <Address>Mail Stop 954 USGS National Center</Address>
+                <City>Reston</City>
+                <StateOrProvince>VA</StateOrProvince>
+                <PostCode>20192</PostCode>
+                <Country>USA</Country>
+            </ContactAddress>
+            <ContactVoiceTelephone>703-648-6533</ContactVoiceTelephone>
+            <ContactFacsimileTelephone>703-648-6252</ContactFacsimileTelephone>
+            <ContactElectronicMailAddress>pschweitzer@usgs.gov</ContactElectronicMailAddress>
+        </ContactInformation>
+        <Fees>none</Fees>
+        <AccessConstraints>none</AccessConstraints>
+        <MaxWidth>4096</MaxWidth>
+        <MaxHeight>4096</MaxHeight>
+    </Service>
+
+    <Capability>
+        <Request>
+            <GetCapabilities>
+                <Format>text/xml</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Post>
+                    </HTTP>
+                </DCPType>
+            </GetCapabilities>
+            <GetMap>
+                <Format>image/png</Format>
+                <Format>image/jpeg</Format>
+                <Format>image/png; mode=8bit</Format>
+                <Format>image/vnd.jpeg-png</Format>
+                <Format>image/vnd.jpeg-png8</Format>
+                <Format>application/x-pdf</Format>
+                <Format>image/svg+xml</Format>
+                <Format>image/tiff</Format>
+                <Format>application/x-protobuf</Format>
+                <Format>application/json</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Post>
+                    </HTTP>
+                </DCPType>
+            </GetMap>
+            <GetFeatureInfo>
+                <Format>text/html</Format>
+                <Format>application/vnd.ogc.gml</Format>
+                <Format>text/plain</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Post>
+                    </HTTP>
+                </DCPType>
+            </GetFeatureInfo>
+            <sld:DescribeLayer>
+                <Format>text/xml</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Post>
+                    </HTTP>
+                </DCPType>
+            </sld:DescribeLayer>
+            <sld:GetLegendGraphic>
+                <Format>image/png</Format>
+                <Format>image/jpeg</Format>
+                <Format>image/png; mode=8bit</Format>
+                <Format>image/vnd.jpeg-png</Format>
+                <Format>image/vnd.jpeg-png8</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Post>
+                    </HTTP>
+                </DCPType>
+            </sld:GetLegendGraphic>
+            <ms:GetStyles>
+                <Format>text/xml</Format>
+                <DCPType>
+                    <HTTP>
+                        <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Get>
+                        <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/services/gscworld?"/></Post>
+                    </HTTP>
+                </DCPType>
+            </ms:GetStyles>
+        </Request>
+        <Exception>
+            <Format>XML</Format>
+            <Format>INIMAGE</Format>
+            <Format>BLANK</Format>
+        </Exception>
+        <sld:UserDefinedSymbolization SupportSLD="1" UserLayer="0" UserStyle="1" RemoteWFS="0" InlineFeature="0" RemoteWCS="0"/>
+        <Layer queryable="1">
+            <Name>GSC_WorldGeology</Name>
+            <Title>GSC_WorldGeology</Title>
+            <Abstract>GSC_WorldGeology</Abstract>
+            <CRS>EPSG:4267</CRS>
+            <CRS>EPSG:4269</CRS>
+            <CRS>EPSG:4326</CRS>
+            <CRS>EPSG:3857</CRS>
+            <CRS>EPSG:900913</CRS>
+            <CRS>EPSG:102113</CRS>
+            <EX_GeographicBoundingBox>
+                <westBoundLongitude>-179</westBoundLongitude>
+                <eastBoundLongitude>179</eastBoundLongitude>
+                <southBoundLatitude>-90</southBoundLatitude>
+                <northBoundLatitude>90</northBoundLatitude>
+            </EX_GeographicBoundingBox>
+            <BoundingBox CRS="EPSG:4326"
+                         minx="-90" miny="-179" maxx="90" maxy="179" />
+            <Layer queryable="1" opaque="0" cascaded="0">
+                <Name>geology</Name>
+                <Title>geology</Title>
+                <Abstract>Geological Survey of Canada generalized geology of the world</Abstract>
+                <KeywordList>
+                    <Keyword>bedrock geologic units</Keyword>
+                </KeywordList>
+                <CRS>EPSG:4267</CRS>
+                <CRS>EPSG:4269</CRS>
+                <CRS>EPSG:4326</CRS>
+                <CRS>EPSG:3857</CRS>
+                <CRS>EPSG:900913</CRS>
+                <CRS>EPSG:102113</CRS>
+                <EX_GeographicBoundingBox>
+                    <westBoundLongitude>-179</westBoundLongitude>
+                    <eastBoundLongitude>179</eastBoundLongitude>
+                    <southBoundLatitude>-90</southBoundLatitude>
+                    <northBoundLatitude>90</northBoundLatitude>
+                </EX_GeographicBoundingBox>
+                <BoundingBox CRS="EPSG:4267"
+                             minx="-90" miny="-179" maxx="90" maxy="179.004" />
+                <Attribution>
+                    <Title>Geological Survey of Canada generalized geology of the world</Title>
+                    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/geology/gscworld/"/>
+                </Attribution>
+                <MetadataURL type="TC211">
+                    <Format>text/xml</Format>
+                    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mrdata.usgs.gov/services/gscworld?request=GetMetadata&amp;layer=geology"/>
+                </MetadataURL>
+                <Style>
+                    <Name>default</Name>
+                    <Title>default</Title>
+                    <LegendURL width="375" height="1796">
+                        <Format>image/png</Format>
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mrdata.usgs.gov/services/gscworld?version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=geology&amp;format=image/png&amp;STYLE=default"/>
+                    </LegendURL>
+                </Style>
+            </Layer>
+            <Layer queryable="0" opaque="0" cascaded="0">
+                <Name>contacts</Name>
+                <Title>contacts</Title>
+                <Abstract>Geological Survey of Canada generalized geology of the world</Abstract>
+                <KeywordList>
+                    <Keyword>bedrock geologic units</Keyword>
+                    <Keyword> geologic contacts</Keyword>
+                </KeywordList>
+                <CRS>EPSG:4267</CRS>
+                <CRS>EPSG:4269</CRS>
+                <CRS>EPSG:4326</CRS>
+                <CRS>EPSG:3857</CRS>
+                <CRS>EPSG:900913</CRS>
+                <CRS>EPSG:102113</CRS>
+                <EX_GeographicBoundingBox>
+                    <westBoundLongitude>-179</westBoundLongitude>
+                    <eastBoundLongitude>179</eastBoundLongitude>
+                    <southBoundLatitude>-90</southBoundLatitude>
+                    <northBoundLatitude>90</northBoundLatitude>
+                </EX_GeographicBoundingBox>
+                <BoundingBox CRS="EPSG:4267"
+                             minx="-90" miny="-179" maxx="90" maxy="179.004" />
+                <Attribution>
+                    <Title>Geological Survey of Canada generalized geology of the world</Title>
+                    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/geology/gscworld/"/>
+                </Attribution>
+                <MetadataURL type="TC211">
+                    <Format>text/xml</Format>
+                    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mrdata.usgs.gov/services/gscworld?request=GetMetadata&amp;layer=contacts"/>
+                </MetadataURL>
+            </Layer>
+            <Layer queryable="0" opaque="0" cascaded="0">
+                <Name>flt</Name>
+                <Title>Faults and dikes</Title>
+                <Abstract>Geological Survey of Canada generalized geology of the world</Abstract>
+                <KeywordList>
+                    <Keyword>geologic structure</Keyword>
+                    <Keyword> faulting (geologic)</Keyword>
+                </KeywordList>
+                <CRS>EPSG:4267</CRS>
+                <CRS>EPSG:4269</CRS>
+                <CRS>EPSG:4326</CRS>
+                <CRS>EPSG:3857</CRS>
+                <CRS>EPSG:900913</CRS>
+                <CRS>EPSG:102113</CRS>
+                <EX_GeographicBoundingBox>
+                    <westBoundLongitude>-179</westBoundLongitude>
+                    <eastBoundLongitude>179</eastBoundLongitude>
+                    <southBoundLatitude>-90</southBoundLatitude>
+                    <northBoundLatitude>90</northBoundLatitude>
+                </EX_GeographicBoundingBox>
+                <BoundingBox CRS="EPSG:4267"
+                             minx="-90" miny="-179" maxx="90" maxy="179.004" />
+                <Attribution>
+                    <Title>Geological Survey of Canada generalized geology of the world</Title>
+                    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://mrdata.usgs.gov/geology/gscworld/"/>
+                </Attribution>
+                <MetadataURL type="TC211">
+                    <Format>text/xml</Format>
+                    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mrdata.usgs.gov/services/gscworld?request=GetMetadata&amp;layer=flt"/>
+                </MetadataURL>
+                <Style>
+                    <Name>default</Name>
+                    <Title>default</Title>
+                    <LegendURL width="175" height="125">
+                        <Format>image/png</Format>
+                        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://mrdata.usgs.gov/services/gscworld?version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=flt&amp;format=image/png&amp;STYLE=default"/>
+                    </LegendURL>
+                </Style>
+            </Layer>
+        </Layer>
+    </Capability>
+</WMS_Capabilities>

@@ -139,6 +139,13 @@ export function readInfoFromCapabilities(
     .filter((v, i, arr) => arr.indexOf(v) === i);
   const provider = readProviderFromCapabilities(capabilitiesDoc);
 
+  const maxWidth = parseInt(
+    getElementText(findChildElement(service, 'MaxWidth'))
+  );
+  const maxHeight = parseInt(
+    getElementText(findChildElement(service, 'MaxHeight'))
+  );
+
   return {
     title: getElementText(findChildElement(service, 'Title')),
     name: getElementText(findChildElement(service, 'Name')),
@@ -148,6 +155,8 @@ export function readInfoFromCapabilities(
     exceptionFormats: exceptionFormats,
     fees: getElementText(findChildElement(service, 'Fees')),
     constraints: getElementText(findChildElement(service, 'AccessConstraints')),
+    ...(!Number.isNaN(maxWidth) && { maxWidth }),
+    ...(!Number.isNaN(maxHeight) && { maxHeight }),
     provider,
     keywords,
   };

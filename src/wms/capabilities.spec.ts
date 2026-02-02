@@ -8,6 +8,8 @@ import {
 import capabilities130 from '../../fixtures/wms/capabilities-brgm-1-3-0.xml';
 // @ts-expect-error ts-migrate(7016)
 import capabilities111 from '../../fixtures/wms/capabilities-brgm-1-1-1.xml';
+// @ts-expect-error ts-migrate(7016)
+import capabilitiesMrdata130 from '../../fixtures/wms/capabilities-mrdata-1-3-0.xml';
 import { parseXmlString } from '../shared/xml-utils.js';
 import type { WmsLayerFull } from './model.js';
 
@@ -351,8 +353,11 @@ describe('WMS capabilities', () => {
 
     it('reads the service info (1.3.0)', () => {
       const doc = parseXmlString(capabilities130);
-      expectedInfo.exceptionFormats = ['XML', 'INIMAGE', 'BLANK'];
-      expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo);
+      const expectedInfo130 = { ...expectedInfo };
+      expectedInfo130.exceptionFormats = ['XML', 'INIMAGE', 'BLANK'];
+      expectedInfo130['maxWidth'] = 4096;
+      expectedInfo130['maxHeight'] = 4096;
+      expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo130);
     });
 
     it('reads the service info (1.1.1)', () => {
@@ -363,6 +368,13 @@ describe('WMS capabilities', () => {
         'application/vnd.ogc.se_blank',
       ];
       expect(readInfoFromCapabilities(doc)).toEqual(expectedInfo);
+    });
+
+    it('reads the service info (MrData 1.3.0)', () => {
+      const doc = parseXmlString(capabilitiesMrdata130);
+      const info = readInfoFromCapabilities(doc);
+      expect(info.maxWidth).toBe(4096);
+      expect(info.maxHeight).toBe(4096);
     });
   });
 
