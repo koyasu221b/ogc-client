@@ -185,13 +185,13 @@ describe('cache utils', () => {
         const longTask = jest.fn(
           () => new Promise((resolve) => setTimeout(() => resolve('done'), 100))
         );
-        useCache(longTask, 'test', 'inprogress');
+        await useCache(longTask, 'test', 'inprogress');
         // wait for the task to be started
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 0));
         await clearCache();
-        useCache(longTask, 'test', 'inprogress');
+        await useCache(longTask, 'test', 'inprogress');
         // wait for the second task to be started
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 0));
         expect(longTask).toHaveBeenCalledTimes(2);
       });
     });
