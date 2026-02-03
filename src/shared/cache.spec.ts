@@ -113,7 +113,9 @@ describe('cache utils', () => {
         let successFactory;
 
         beforeEach(() => {
-          failingFactory = jest.fn(() => Promise.reject(new Error('Task Failed')));
+          failingFactory = jest.fn(() =>
+            Promise.reject(new Error('Task Failed'))
+          );
           successFactory = jest.fn(() => Promise.resolve({ success: true }));
         });
 
@@ -134,7 +136,12 @@ describe('cache utils', () => {
           // If the bug exists, the rejected promise would still be in the map,
           // causing this line to fail (it would return the old rejection)
           // and successFactory would never be called.
-          const result = await useCache(successFactory, 'test', 'retry-check', '01');
+          const result = await useCache(
+            successFactory,
+            'test',
+            'retry-check',
+            '01'
+          );
 
           expect(result).toEqual({ success: true });
           expect(successFactory).toHaveBeenCalledTimes(1);
@@ -151,7 +158,11 @@ describe('cache utils', () => {
           expect(failingFactory).toHaveBeenCalledTimes(1); // Should have been deduplicated
 
           // Verify we can try again immediately
-          const result = await useCache(successFactory, 'test', 'concurrent-fail');
+          const result = await useCache(
+            successFactory,
+            'test',
+            'concurrent-fail'
+          );
           expect(result).toEqual({ success: true });
         });
       });
