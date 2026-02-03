@@ -342,6 +342,8 @@ describe('WmsEndpoint', () => {
           'WMS 1.3.0',
           'SLD 1.1.0',
         ],
+        maxHeight: 4096,
+        maxWidth: 4096,
         provider: {
           contact: {
             name: 'Support BRGM',

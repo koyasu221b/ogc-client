@@ -108,6 +108,66 @@ describe('cache utils', () => {
           });
         });
       });
+      describe('when the factory function fails (rejects)', () => {
+        let failingFactory;
+        let successFactory;
+
+        beforeEach(() => {
+          failingFactory = jest.fn(() => Promise.reject(new Error('Task Failed')));
+          successFactory = jest.fn(() => Promise.resolve({ success: true }));
+        });
+
+        it('propagates the error to the caller', async () => {
+          await expect(
+            useCache(failingFactory, 'test', 'fail-check', '01')
+          ).rejects.toThrow('Task Failed');
+        });
+
+        it('removes the failed promise from the internal map allowing retries', async () => {
+          // 1. First attempt fails
+          // We must catch the error here so the test continues to step 2
+          await expect(
+            useCache(failingFactory, 'test', 'retry-check', '01')
+          ).rejects.toThrow('Task Failed');
+
+          // 2. Second attempt with the SAME keys should run a fresh factory
+          // If the bug exists, the rejected promise would still be in the map,
+          // causing this line to fail (it would return the old rejection)
+          // and successFactory would never be called.
+          const result = await useCache(successFactory, 'test', 'retry-check', '01');
+
+          expect(result).toEqual({ success: true });
+          expect(successFactory).toHaveBeenCalledTimes(1);
+        });
+
+        it('handles simultaneous failures gracefully', async () => {
+          // Simulate two callers waiting on the same failing task
+          const call1 = useCache(failingFactory, 'test', 'concurrent-fail');
+          const call2 = useCache(failingFactory, 'test', 'concurrent-fail');
+
+          await expect(call1).rejects.toThrow('Task Failed');
+          await expect(call2).rejects.toThrow('Task Failed');
+
+          expect(failingFactory).toHaveBeenCalledTimes(1); // Should have been deduplicated
+
+          // Verify we can try again immediately
+          const result = await useCache(successFactory, 'test', 'concurrent-fail');
+          expect(result).toEqual({ success: true });
+        });
+      });
+      describe('when a task fails', () => {
+        let failingTask;
+        beforeEach(async () => {
+          failingTask = jest.fn(() => Promise.reject(new Error('fail')));
+          await useCache(failingTask, 'test', 'fail').catch(() => {});
+        });
+        it('removes the task from the map so it can be retried', async () => {
+          const successTask = jest.fn(() => Promise.resolve({ success: true }));
+          const result = await useCache(successTask, 'test', 'fail');
+          expect(result).toEqual({ success: true });
+          expect(successTask).toHaveBeenCalledTimes(1);
+        });
+      });
     });
     describe('clearCache', () => {
       let result;
@@ -120,6 +180,19 @@ describe('cache utils', () => {
       it('do not use the cached function object', () => {
         expect(factory).toHaveBeenCalled();
         expect(result).toEqual({ fresh: true });
+      });
+      it('clears in-progress tasks', async () => {
+        const longTask = jest.fn(
+          () => new Promise((resolve) => setTimeout(() => resolve('done'), 100))
+        );
+        useCache(longTask, 'test', 'inprogress');
+        // wait for the task to be started
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        await clearCache();
+        useCache(longTask, 'test', 'inprogress');
+        // wait for the second task to be started
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        expect(longTask).toHaveBeenCalledTimes(2);
       });
     });
   });
