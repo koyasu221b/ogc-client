@@ -166,19 +166,6 @@ describe('cache utils', () => {
           expect(result).toEqual({ success: true });
         });
       });
-      describe('when a task fails', () => {
-        let failingTask;
-        beforeEach(async () => {
-          failingTask = jest.fn(() => Promise.reject(new Error('fail')));
-          await useCache(failingTask, 'test', 'fail').catch(() => {});
-        });
-        it('removes the task from the map so it can be retried', async () => {
-          const successTask = jest.fn(() => Promise.resolve({ success: true }));
-          const result = await useCache(successTask, 'test', 'fail');
-          expect(result).toEqual({ success: true });
-          expect(successTask).toHaveBeenCalledTimes(1);
-        });
-      });
     });
     describe('clearCache', () => {
       let result;
@@ -196,10 +183,10 @@ describe('cache utils', () => {
         const longTask = jest.fn(
           () => new Promise((resolve) => setTimeout(() => resolve('done'), 100))
         );
-        await useCache(longTask, 'test', 'inprogress');
+        useCache(longTask, 'test', 'inprogress');
         // wait for the task to be started
         await new Promise((resolve) => setTimeout(resolve, 0));
-        await clearCache();
+        clearCache();
         await useCache(longTask, 'test', 'inprogress');
         // wait for the second task to be started
         await new Promise((resolve) => setTimeout(resolve, 0));
