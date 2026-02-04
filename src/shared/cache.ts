@@ -107,7 +107,11 @@ export async function useCache<T>(
   }
   const taskRun = factory();
   if (taskRun instanceof Promise) {
-    taskRun.then(() => tasksMap.delete(taskKey));
+    taskRun
+      .finally(() => {
+        if (tasksMap.get(taskKey) === taskRun) tasksMap.delete(taskKey);
+      })
+      .catch(() => {});
     tasksMap.set(taskKey, taskRun);
   }
   const result = await taskRun;
@@ -124,7 +128,7 @@ export async function purgeOutdatedEntries() {
   const keys = await cache.keys();
   for (const key of keys) {
     const resp = await cache.match(key);
-    if (parseInt(resp.headers.get('x-expiry')) <= Date.now())
+    if (resp && parseInt(resp.headers.get('x-expiry')) <= Date.now())
       await cache.delete(key);
   }
 }
@@ -133,10 +137,9 @@ export async function purgeOutdatedEntries() {
  * Remove all cache entries; will not prevent the creation of new ones
  */
 export async function clearCache() {
+  tasksMap.clear();
   const cache = await getCache();
   if (!cache) return;
   const keys = await cache.keys();
-  for (const key of keys) {
-    await cache.delete(key);
-  }
+  await Promise.all(keys.map((key) => cache.delete(key)));
 }
